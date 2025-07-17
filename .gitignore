@@ -1,0 +1,53 @@
+# ============================================================================
+# GITIGNORE
+# ============================================================================
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+
+# Virtual environments
+**/.venv/
+**/venv/
+**/env/
+
+# Environment files
+**/.env
+**/.env.dev
+**/.env.prod
+**/.env.test
+**/.env.local
+**/.env.*.local
+config/.env*
+!config/.env.example
+
+# IDEs
+.vscode/
+.idea/
+**/*.swp
+**/*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+**/*.log
+**/logs/
+
+# Database
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+
+# Docker
+**/docker-compose.override.yml
+
+# Node.js (если будет frontend)
+**/node_modules/
+**/dist/
+**/.next/

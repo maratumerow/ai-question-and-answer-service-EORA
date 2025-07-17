@@ -1,0 +1,56 @@
+# ============================================================================
+# DOCKER IGNORE - ИСКЛЮЧЕНИЯ ПРИ СБОРКЕ ОБРАЗА
+# ============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+
+# Scripts (только если не нужны в контейнере)
+scripts/
+
+# Tests (если не запускаются в продакшене)
+tests/
+
+# Logs (если не нужны в контейнере)
+logs/
