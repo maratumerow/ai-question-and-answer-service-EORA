@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:15-alpine
+    image: ankane/pgvector
     environment:
       POSTGRES_DB: eora_db
       POSTGRES_USER: user
@@ -24,7 +24,7 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql+asyncpg://user:password@postgres:5432/eora_db
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ANTHROPIC_API_KEY=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
       - DEBUG=false
     depends_on:
       postgres:

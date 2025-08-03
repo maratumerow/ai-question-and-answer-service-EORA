@@ -1,41 +1,37 @@
-"""Prompt building utilities for LLM."""
+"""Russian prompt template implementation."""
 
 from src.domain.entities import Source
+from src.domain.services.prompt_template import PromptTemplateInterface
 
 
-class PromptBuilder:
-    """Builds prompts for LLM."""
+class RussianPromptTemplate(PromptTemplateInterface):
+    """Russian language prompt template."""
 
-    def build_prompt_with_sources(
+    def create_simple_prompt(self, question: str) -> str:
+        """Create simple prompt for question only."""
+        return f"Пожалуйста, ответьте на следующий вопрос: {question}"
+
+    def create_context_prompt(
         self, question: str, sources: list[Source]
     ) -> str:
-        """Create optimized prompt."""
-        context = self._prepare_context(sources)
-        return self._build_prompt_template(question, context, sources)
+        """Create prompt with context from sources."""
 
-    def _prepare_context(self, sources: list[Source]) -> str:
-        """Prepare context from sources."""
+        if not sources:
+            return self.create_simple_prompt(question)
+
+        # Build context from sources
         context_parts: list[str] = []
         for i, source in enumerate(sources, 1):
             context_parts.append(
-                f"[{i}] {source.title}\nURL: {source.url}\n{source.content}\n"
+                f"Источник {i} ({source.title}):\n{source.content}\n"
             )
-        return "\n".join(context_parts)
 
-    def _build_prompt_template(
-        self, question: str, context: str, sources: list[Source]
-    ) -> str:
-        """Build prompt template."""
-        source_list = "\n".join([f"- {s.title}: {s.url}" for s in sources])
+        context = "\n".join(context_parts)
 
         return f"""Вы - консультант компании EORA, которая занимается \
 разработкой AI-решений.
 
-ДОСТУПНЫЕ ИСТОЧНИКИ:
-{source_list}
-
-
-ПОЛНАЯ ИНФОРМАЦИЯ:
+ИСТОЧНИКИ:
 {context}
 
 ВОПРОС: {question}

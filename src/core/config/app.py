@@ -1,4 +1,5 @@
 from .base import BaseConfig
+from .vector_search import VectorSearchConfig
 
 
 class AppSettings(BaseConfig):
@@ -17,3 +18,6 @@ class AppSettings(BaseConfig):
     api_host: str = "0.0.0.0"
     api_port: int = 8000
     api_str: str = "/api/v1"
+
+    # Vector search settings
+    vector_search: VectorSearchConfig = VectorSearchConfig()

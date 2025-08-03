@@ -20,10 +20,6 @@ class SourceRepositoryInterface(ABC):
         """Get all sources."""
 
     @abstractmethod
-    async def create(self, source: Source) -> Source:
-        """Create new source."""
-
-    @abstractmethod
     async def create_or_update(self, source: Source) -> Source:
         """Create new source or update existing one."""
 

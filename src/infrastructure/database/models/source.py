@@ -1,6 +1,7 @@
 """Database configuration and models."""
 
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import (
     DateTime,
@@ -8,9 +9,14 @@ from sqlalchemy import (
     Text,
     func,
 )
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
+
+if TYPE_CHECKING:
+    from src.infrastructure.database.models.source_embedding import (
+        SourceEmbeddingModel,
+    )
 
 
 class SourceModel(BaseModel):
@@ -25,4 +31,11 @@ class SourceModel(BaseModel):
     content: Mapped[str] = mapped_column(Text, nullable=False)
     updated_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), onupdate=func.now()
+    )
+
+    # Связь с эмбеддингами
+    embeddings: Mapped[list["SourceEmbeddingModel"]] = relationship(
+        "SourceEmbeddingModel",
+        back_populates="source",
+        cascade="all, delete-orphan",
     )

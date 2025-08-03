@@ -5,8 +5,12 @@ from fastapi import Depends
 from src.application.use_cases import LoadSourcesUseCase
 from src.domain.repositories import SourceRepositoryInterface
 from src.domain.services import ContentParsingServiceInterface
+from src.domain.services.source_matching import SourceMatchingServiceInterface
 from src.presentation.dependencies.repositories import get_source_repository
-from src.presentation.dependencies.services import get_content_parsing_service
+from src.presentation.dependencies.services import (
+    get_content_parsing_service,
+    get_source_matching_service,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -18,10 +22,14 @@ def get_load_sources_use_case(
     content_parsing_service: ContentParsingServiceInterface = Depends(
         get_content_parsing_service
     ),
+    source_matching_service: SourceMatchingServiceInterface = Depends(
+        get_source_matching_service
+    ),
 ) -> LoadSourcesUseCase:
     """Get load sources use case."""
     logger.debug("Creating LoadSourcesUseCase")
     return LoadSourcesUseCase(
         source_repository=source_repository,
         content_parsing_service=content_parsing_service,
+        source_matching_service=source_matching_service,
     )

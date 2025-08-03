@@ -23,6 +23,12 @@ dependencies = [
     "beautifulsoup4>=4.13.4", # Парсинг HTML и XML документов (замена lxml для простоты)
     # === AI & MACHINE LEARNING ===
     "anthropic>=0.40.0",  # Клиент для работы с Anthropic LLM API
+    "langchain>=0.3.20",         # Framework для работы с LLM и RAG
+    "langchain-community>=0.3.20", # Дополнительные компоненты LangChain
+    "langchain-anthropic>=0.3.0", # Anthropic интеграция для LangChain
+    "sentence-transformers>=3.3.1", # Модели для создания векторных представлений
+    "pgvector>=0.3.6",          # PostgreSQL расширение для векторного поиска
+    "tiktoken>=0.8.0",           # Токенизатор для подсчета токенов
     # === DATABASE & ORM ===
     "sqlalchemy>=2.0.41",      # ORM для работы с реляционными базами данных
     "alembic>=1.16.1",         # Система миграций БД для версионирования схемы

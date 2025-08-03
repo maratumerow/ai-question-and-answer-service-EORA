@@ -11,7 +11,6 @@ from src.application.use_cases import (
 from src.domain.repositories import (
     AnswerRepositoryInterface,
     QuestionRepositoryInterface,
-    SourceRepositoryInterface,
 )
 from src.domain.services import (
     LLMServiceInterface,
@@ -20,7 +19,6 @@ from src.domain.services import (
 from src.presentation.dependencies.repositories import (
     get_answer_repository,
     get_question_repository,
-    get_source_repository,
 )
 from src.presentation.dependencies.services import (
     get_anthropic_service,
@@ -41,9 +39,6 @@ def get_create_question_use_case(
 
 
 def get_find_relevant_sources_use_case(
-    source_repository: SourceRepositoryInterface = Depends(
-        get_source_repository
-    ),
     source_matching_service: SourceMatchingServiceInterface = Depends(
         get_source_matching_service
     ),
@@ -51,7 +46,6 @@ def get_find_relevant_sources_use_case(
     """Get find relevant sources use case."""
     logger.debug("Creating FindRelevantSourcesUseCase")
     return FindRelevantSourcesUseCase(
-        source_repository=source_repository,
         source_matching_service=source_matching_service,
     )
 

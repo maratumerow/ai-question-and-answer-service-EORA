@@ -5,7 +5,8 @@ from dataclasses import asdict
 from uuid import UUID
 
 from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.domain.entities import Source
@@ -105,51 +106,9 @@ class SourceRepository(SourceRepositoryInterface):
                 original_error=e,
             ) from e
 
-    async def create(self, source: Source) -> Source:
-        """Create new source."""
-        try:
-            model = self._domain_to_model(source)
-            self.session.add(model)
-            await self.session.commit()
-            await self.session.refresh(model)
-            return self._model_to_domain(model)
-        except IntegrityError as e:
-            logger.error(
-                "Integrity error while creating source %s: %s",
-                source.id,
-                str(e),
-            )
-            raise SourceRepositoryError(
-                f"Source with URL {source.url} already exists "
-                f"or violates constraints",
-                original_error=e,
-            ) from e
-        except SQLAlchemyError as e:
-            logger.error(
-                "Database error while creating source %s: %s",
-                source.id,
-                str(e),
-            )
-            raise SourceRepositoryError(
-                f"Failed to create source: {source.id}",
-                original_error=e,
-            ) from e
-        except Exception as e:
-            logger.error(
-                "Unexpected error while creating source %s: %s",
-                source.id,
-                str(e),
-            )
-            raise SourceRepositoryError(
-                f"Unexpected error while creating source: {source.id}",
-                original_error=e,
-            ) from e
-
     async def create_or_update(self, source: Source) -> Source:
-        """Create new source or update existing one using UPSERT."""
+        """Create new source or update existing one."""
         try:
-            from sqlalchemy.dialects.postgresql import insert
-
             source_data = asdict(source)
             stmt = insert(SourceModel).values(**source_data)
 

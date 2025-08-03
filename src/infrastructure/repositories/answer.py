@@ -11,7 +11,7 @@ from src.domain.exceptions.repository import AnswerRepositoryError
 from src.domain.repositories import (
     AnswerRepositoryInterface,
 )
-from src.infrastructure.database.models.question_answer import (
+from src.infrastructure.database.models import (
     AnswerModel,
 )
 
